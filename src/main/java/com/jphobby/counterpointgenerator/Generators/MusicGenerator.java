@@ -24,11 +24,11 @@ public class MusicGenerator {
 
         generatorUtils.setStartingAndEndingNotes(sheetMusic);
 
-        int secondNote = 2;
-        int penultimateNote = sheetMusic[0].length - 1;
+        int secondNotePosition = 2;
+        int penultimateNotePosition = sheetMusic[0].length - 1;
 
-        IntStream.range(secondNote, penultimateNote)
-                 .forEach(note -> generateNotes(sheetMusic, note));
+        IntStream.range(secondNotePosition, penultimateNotePosition)
+                 .forEach(notePosition -> generateNotes(sheetMusic, notePosition));
 
         return sheetMusic;
     }
@@ -41,17 +41,15 @@ public class MusicGenerator {
 
     private Note[][] generateNotes(Note[][] sheetMusic, int note) {
         // Set required variables
-        int previousNote = note - 1;
-        int bassMelody = 0;
+        int previousNoteLocation = note - 1;
+        int bassMelodyNumber = 0;
         int numberOfMelodies = sheetMusic.length;
-        Note previousBassNote = sheetMusic[bassMelody][previousNote];
+        Note previousBassNote = sheetMusic[bassMelodyNumber][previousNoteLocation];
 
-        Note currentBassNote = generateBassNote(sheetMusic, note, bassMelody, previousBassNote);
+        Note currentBassNote = generateBassNote(sheetMusic, note, bassMelodyNumber, previousBassNote);
 
         // Generate notes for remaining melodies
-        IntStream.range(1, numberOfMelodies).forEach(melody -> {
-            generateNote(sheetMusic, note, currentBassNote, melody);
-        });
+        IntStream.range(1, numberOfMelodies).forEach(melody -> { generateNote(sheetMusic, note, currentBassNote, melody); });
 
         return sheetMusic;
     }

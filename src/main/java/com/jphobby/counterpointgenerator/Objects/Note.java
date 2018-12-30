@@ -10,6 +10,8 @@ public class Note {
     private int octave;
 
     private String duration = "q";
+    
+    private static final String notes = "cdefgab";
 
     public Note(int pitch, int octave) {
         this.octave = limitOctaveRange(octave);
@@ -18,6 +20,10 @@ public class Note {
 
     public int getPitch() {
         return pitch;
+    }
+    
+    public char getPitchChar() {
+    	return notes.charAt(pitch - 1);
     }
 
     public int getOctave() {
