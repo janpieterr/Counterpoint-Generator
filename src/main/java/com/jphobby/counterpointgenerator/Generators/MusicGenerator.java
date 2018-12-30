@@ -39,27 +39,27 @@ public class MusicGenerator {
      * The starting notes are fixed, the rest are randomly generated through a probability density function.
      */
 
-    private Note[][] generateNotes(Note[][] sheetMusic, int note) {
+    private Note[][] generateNotes(Note[][] sheetMusic, int notePosition) {
         // Set required variables
-        int previousNoteLocation = note - 1;
+        int previousNoteLocation = notePosition - 1;
         int bassMelodyNumber = 0;
         int numberOfMelodies = sheetMusic.length;
         Note previousBassNote = sheetMusic[bassMelodyNumber][previousNoteLocation];
 
-        Note currentBassNote = generateBassNote(sheetMusic, note, bassMelodyNumber, previousBassNote);
+        Note currentBassNote = generateBassNote(sheetMusic, notePosition, bassMelodyNumber, previousBassNote);
 
         // Generate notes for remaining melodies
-        IntStream.range(1, numberOfMelodies).forEach(melody -> { generateNote(sheetMusic, note, currentBassNote, melody); });
+        IntStream.range(1, numberOfMelodies).forEach(melody -> { generateNote(sheetMusic, notePosition, currentBassNote, melody); });
 
         return sheetMusic;
     }
 
-    private void generateNote(Note[][] sheetMusic, int note, Note currentBassNote, int melody) {
+    private void generateNote(Note[][] sheetMusic, int notePosition, Note currentBassNote, int melodyNumber) {
         int intervalToNewNote = probabilityDensityFunctions.getIntervalFromConsonantsDistribution();
         // Set note
         int newPitch = currentBassNote.getPitch() + intervalToNewNote;
-        int newOctave = currentBassNote.getOctave() + 1 + melody / 2;
-        sheetMusic[melody][note] = new Note(newPitch, newOctave);
+        int newOctave = currentBassNote.getOctave() + 1 + melodyNumber / 2;
+        sheetMusic[melodyNumber][notePosition] = new Note(newPitch, newOctave);
     }
 
     private Note generateBassNote(Note[][] sheetMusic, int note, int bassMelody, Note previousBassNote) {
