@@ -21,7 +21,7 @@ public class App {
 
     public static void main( String[] args ) {
     	
-        sheetMusic = musicGenerator.generateMusic(sheetMusic);
+        sheetMusic = musicGenerator.fillSheetMusic(sheetMusic);
 
         String playerString = PlayerUtils.convertToPlayerFormat(sheetMusic);
         PlayerUtils.printPlayerString(playerString);
